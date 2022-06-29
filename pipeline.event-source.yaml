@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: EventSource
+metadata:
+  name: pipeline
+spec:
+  eventBusName: codefresh-eventbus
+  service:
+    ports:
+      - port: 80
+  template:
+    serviceAccountName: argo-server
+  github:
+    github-e2fff459-991d-4f95-b6cb-942b638299c3:
+      events:
+        - push
+      repositories:
+        - owner: codefresh-customer-success
+          names:
+            - go-app
+      webhook:
+        port: '80'
+        method: POST
+        endpoint: /webhooks/csdp/pipeline/github-e2fff459-991d-4f95-b6cb-942b638299c3
+        url: https://lrcsdp.support.cf-cd.com
+      active: true
+      insecure: false
+      contentType: json
+      deleteHookOnFinish: true
+      apiToken:
+        name: autopilot-secret
+        key: git_token
