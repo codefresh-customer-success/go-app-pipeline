@@ -23,7 +23,7 @@ spec:
             type: string
   triggers:
     - template:
-        name: ci
+        name: goapp
         conditions: github-e2fff459-991d-4f95-b6cb-942b638299c3
         argoWorkflow:
           operation: submit
